@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>📸 Realtime Detection</title>
+  <style>
+    table {
+        border-collapse: collapse;
+        width: 60%;
+    }
+    th, td {
+        padding: 8px;
+        border: 1px solid #ccc;
+        text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h2>📸 Realtime Camera Detection</h2>
+
+  {% if not result_image %}
+    <!-- Bật camera stream tự động khi load trang -->
+    <img id="camera-frame" width="720" style="display: block;" src="{{ url_for('camera_feed') }}">
+
+    <form method="GET" action="/capture-frame">
+      <button type="submit">📷 Chụp ảnh hiện tại</button>
+    </form>
+
+  {% else %}
+    <!-- Show captured image -->
+    <img src="/{{ result_image }}" width="720">
+    <h3>📊 Detection Summary & Pricing:</h3>
+    <form onsubmit="event.preventDefault(); calculateTotal();">
+      <table>
+        <thead>
+          <tr>
+            <th>Tên sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Đơn giá (VND)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for label in ['Apple', 'Chilli', 'Lemon', 'Tomato'] %}
+          <tr>
+            <td><strong>{{ label }}</strong></td>
+            <td id="count_{{ label }}">{{ label_counts[label] if label in label_counts else 0 }}</td>
+            <td>
+              <input type="number" id="price_{{ label }}" placeholder="Nhập đơn giá" min="0">
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <br>
+      <button type="submit">Tính tổng tiền</button>
+    </form>
+    <h3 id="total-amount">💰 Tổng tiền: -</h3>
+
+    <script>
+      function calculateTotal() {
+        const labels = ['Apple', 'Chilli', 'Lemon', 'Tomato'];
+        let total = 0;
+
+        labels.forEach(label => {
+          const price = parseFloat(document.getElementById("price_" + label).value) || 0;
+          const quantity = parseInt(document.getElementById("count_" + label).textContent) || 0;
+          total += price * quantity;
+        });
+
+        document.getElementById("total-amount").innerText = "💰 Tổng tiền: " + total.toLocaleString('vi-VN') + " VND";
+      }
+    </script>
+  {% endif %}
+
+  <br><a href="/">← Quay về trang chính</a>
+</body>
+</html>

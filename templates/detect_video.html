@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>📹 Tải Video - Tính Tiền Bánh</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff7f0;
+      color: #333;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h2 {
+      color: #d2691e;
+      font-size: 2em;
+    }
+
+    form {
+      margin-top: 30px;
+    }
+
+    input[type="file"] {
+      padding: 10px;
+      font-size: 1em;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #ffb347;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ff8c00;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 40px;
+      text-decoration: none;
+      color: #555;
+      font-size: 1em;
+    }
+
+    a:hover {
+      color: #d2691e;
+    }
+  </style>
+</head>
+<body>
+  <h2>📹 Tải Video Để Nhận Diện Bánh</h2>
+  <form method="POST" enctype="multipart/form-data">
+    <input type="file" name="video" accept="video/*" required>
+    <br>
+    <button type="submit">🔍 Nhận Diện và Tính Tiền</button>
+  </form>
+  <br>
+  <a href="/">← Quay lại trang chính</a>
+</body>
+</html>

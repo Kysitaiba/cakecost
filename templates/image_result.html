@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>🖼️ Kết Quả Nhận Diện Bánh</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fffefc;
+      color: #333;
+      text-align: center;
+      padding: 30px;
+    }
+
+    img {
+      max-width: 90%;
+      height: auto;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    th {
+      background-color: #ffe0b3;
+    }
+
+    input[type="number"] {
+      width: 100px;
+      padding: 5px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #ffa94d;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ff8c1a;
+    }
+
+    #total-amount {
+      margin-top: 20px;
+      font-size: 1.4em;
+      color: #b22222;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 30px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    a:hover {
+      color: #e67300;
+    }
+  </style>
+  <script>
+    function calculateTotal() {
+      const labels = [
+        'bread_coconut', 'bread_roll', 'chiffon', 'cookie',
+        'croissant', 'croissant_chocolate', 'donut', 'mochi',
+        'mooncake', 'muffin', 'sandwich', 'tart_egg'
+      ];
+      let total = 0;
+
+      labels.forEach(label => {
+        const price = parseFloat(document.getElementById("price_" + label).value) || 0;
+        const count = parseInt(document.getElementById("count_" + label).textContent) || 0;
+        total += price * count;
+      });
+
+      document.getElementById("total-amount").innerText =
+        "💰 Tổng tiền: " + total.toLocaleString('vi-VN') + " VND";
+    }
+  </script>
+</head>
+<body>
+  <h2>🖼️ Ảnh Đã Nhận Diện</h2>
+  <img src="/{{ result_image }}" alt="Kết quả nhận diện ảnh">
+
+  <h3>📊 Danh sách bánh nhận diện & tính tiền:</h3>
+  <form onsubmit="event.preventDefault(); calculateTotal();">
+    <table>
+      <thead>
+        <tr>
+          <th>Tên bánh</th>
+          <th>Số lượng</th>
+          <th>Đơn giá (VND)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for label in [
+          'bread_coconut', 'bread_roll', 'chiffon', 'cookie',
+          'croissant', 'croissant_chocolate', 'donut', 'mochi',
+          'mooncake', 'muffin', 'sandwich', 'tart_egg'
+        ] %}
+        <tr>
+          <td><strong>{{ label.replace('_', ' ').title() }}</strong></td>
+          <td id="count_{{ label }}">{{ label_counts[label] if label in label_counts else 0 }}</td>
+          <td>
+            <input type="number" id="price_{{ label }}" placeholder="Nhập giá" min="0" step="1000">
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <button type="submit">🔢 Tính tổng tiền</button>
+  </form>
+
+  <h3 id="total-amount">💰 Tổng tiền: -</h3>
+
+  <a href="/">← Quay lại trang chính</a>
+</body>
+</html>

@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+static/uploads/
+static/results/
+*.pt
+model/
+.env
+.vscode/
