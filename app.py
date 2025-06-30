@@ -175,7 +175,7 @@ def detect_video():
                                    all_labels=labels)
     return render_template('detect_video.html')
 
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))  # Render cung cấp PORT động
+    app.run(host="0.0.0.0", port=port)        # Flask phải lắng nghe 0.0.0.0
 
-if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port, debug=False)
